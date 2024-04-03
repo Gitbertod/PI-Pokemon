@@ -10,12 +10,14 @@ const getPokemonHandler = async (req, res) => {
         if (name) {
             const response = "Estas en la ruta get" //await getPokemonByNameController()
             return res.status(200).json(response)
+        }else{
+            const response = await getPokemonController();
+            return res.status(200).json(response)
+
         }
     } catch (error) {
         return res.status(400).json({ error: "Entraste al error de getPokemon" })
     }
-    const response = await getPokemonController();
-    return res.status(200).json(response)
 }
 
 const getPokemonByIdHandler = async (req, res) => {

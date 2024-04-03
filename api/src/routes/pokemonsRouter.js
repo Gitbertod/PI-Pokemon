@@ -9,7 +9,7 @@ const {
 } = require('../handlers/pokemonsHandler')
 
 pokemonsRouter.get("/",getPokemonHandler);
-pokemonsRouter.get("/:idPokemon",getPokemonByIdHandler);
+pokemonsRouter.get("/:id",getPokemonByIdHandler);
 pokemonsRouter.post("/pokemons",createPokemonDb)
 
 

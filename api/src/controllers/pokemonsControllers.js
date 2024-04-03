@@ -16,17 +16,28 @@ const getPokemonController = async () => {
             id: p.data.id,
             nombre: p.data.name,
             imagen: p.data.sprites.other.home.front_default,
-            vida:p.data.stats[0].base_stat,
-            ataque:p.data.stats[1].base_stat,
-            defensa:p.data.stats[2].base_stat,
-            velocidad:p.data.stats[5].base_stat,
-            altura:p.data.height,
+            vida: p.data.stats[0].base_stat,
+            ataque: p.data.stats[1].base_stat,
+            defensa: p.data.stats[2].base_stat,
+            velocidad: p.data.stats[5].base_stat,
+            altura: p.data.height,
             peso: p.data.weight
         }
     })
+    console.log("Entro en la funcion")
     return pokemonfromApi
 }
 
+const getPokemonByIdController = async (id) => {
+    const allPokemons = await getPokemonController();
+    const pokemonId = await allPokemons.find(e => e.id == id)
+
+    if (pokemonId){
+        return pokemonId;
+    } else {
+        throw Error (`No existe el pokémon con el ID: ${id}`);
+    }
+}
 
 const getPokemonByNameController = async (name) => {
     const allPokemons = await getPokemonController()
@@ -35,5 +46,6 @@ const getPokemonByNameController = async (name) => {
 
 module.exports = {
     getPokemonController,
-    getPokemonByNameController
+    getPokemonByNameController,
+    getPokemonByIdController
 }

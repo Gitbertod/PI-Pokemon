@@ -4,7 +4,7 @@ const { Op } = require("sequelize");
 
 
 const getPokemonController = async () => {
-    const pokemonApi = await axios.get('http://pokeapi.co/api/v2/pokemon')
+    const pokemonApi = await axios.get('http://pokeapi.co/api/v2/pokemon?limit=300&offset=0')
     const pokemonData = pokemonApi.data.results
 
     //Mapeo
@@ -32,20 +32,44 @@ const getPokemonByIdController = async (id) => {
     const allPokemons = await getPokemonController();
     const pokemonId = await allPokemons.find(e => e.id == id)
 
-    if (pokemonId){
+    if (pokemonId) {
         return pokemonId;
     } else {
-        throw Error (`No existe el pokémon con el ID: ${id}`);
+        throw Error(`No existe el pokémon con el ID: ${id}`);
     }
 }
 
-const getPokemonByNameController = async (name) => {
+const getPokemonByNameController = async (nombre) => {
+    const name = nombre.toLowerCase()
     const allPokemons = await getPokemonController()
-    return allPokemons
+    const filtered = await allPokemons.filter(p => p?.nombre?.includes(name))
+   
+    return filtered
 }
 
+const createPokemonDbController = async (nombre, imagen, vida, ataque, defensa, velocidad) => {
+   
+    const [pokemon, created] = await Pokemon.findOrCreate({
+        where: {
+            nombre,
+            imagen,
+            vida,
+            ataque,
+            defensa,
+            velocidad
+        }
+    })
+
+    if (created) {
+        const [typesDb] = await Types.findOrCreate({ where: { nombre: nombre } });
+        await pokemon.addTypes(typesDb);
+    }
+    return pokemon
+
+}
 module.exports = {
     getPokemonController,
     getPokemonByNameController,
-    getPokemonByIdController
+    getPokemonByIdController,
+    createPokemonDbController
 }

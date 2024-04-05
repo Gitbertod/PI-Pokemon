@@ -1,14 +1,15 @@
 const {
     getPokemonController,
     getPokemonByIdController,
-    getPokemonByNameController
+    getPokemonByNameController,
+    createPokemonDbController
 } = require("../controllers/pokemonsControllers")
 
 const getPokemonHandler = async (req, res) => {
     try {
-        const { name } = req.query;
-        if (name) {
-            const response = "Estas en la ruta get" //await getPokemonByNameController()
+        const { nombre } = req.query;
+        if (nombre) {
+            const response = await getPokemonByNameController(nombre)
             return res.status(200).json(response)
         } else {
             const response = await getPokemonController();
@@ -23,19 +24,26 @@ const getPokemonByIdHandler = async (req, res) => {
     try {
         const { id } = req.params;
         const response = await getPokemonByIdController(id)
-        
+
         return res.status(200).json(response)
     } catch (error) {
         res.status(400).json({ error: error.message })
     }
 }
 
-const createPokemonDb = async (nombre, imagen, vida, ataque, defensa, velocidad) => {
-
+const createPokemonDbHandler = async (req, res) => {
+    const { nombre, imagen, vida, ataque, defensa, velocidad } = req.body;
+    try {
+        
+        const response = await createPokemonDbController(nombre, imagen, vida, ataque, defensa, velocidad)
+        return res.status(200).json(response)
+    } catch (error) {
+        res.status(400).json({ error: error.message })
+    }
 }
 
 module.exports = {
     getPokemonHandler,
     getPokemonByIdHandler,
-    createPokemonDb
+    createPokemonDbHandler
 }

@@ -5,12 +5,12 @@ const pokemonsRouter = Router();
 const {
     getPokemonHandler,
     getPokemonByIdHandler,
-    createPokemonDb
+    createPokemonDbHandler
 } = require('../handlers/pokemonsHandler')
 
 pokemonsRouter.get("/",getPokemonHandler);
 pokemonsRouter.get("/:id",getPokemonByIdHandler);
-pokemonsRouter.post("/pokemons",createPokemonDb)
+pokemonsRouter.post("/pokemons",createPokemonDbHandler)
 
 
 module.exports = pokemonsRouter;

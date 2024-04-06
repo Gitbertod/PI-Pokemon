@@ -10,7 +10,7 @@ const {
 
 pokemonsRouter.get("/",getPokemonHandler);
 pokemonsRouter.get("/:id",getPokemonByIdHandler);
-pokemonsRouter.post("/pokemons",createPokemonDbHandler)
+pokemonsRouter.post("/",createPokemonDbHandler)
 
 
 module.exports = pokemonsRouter;

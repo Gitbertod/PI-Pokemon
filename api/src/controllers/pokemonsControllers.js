@@ -43,28 +43,22 @@ const getPokemonByNameController = async (nombre) => {
     const name = nombre.toLowerCase()
     const allPokemons = await getPokemonController()
     const filtered = await allPokemons.filter(p => p?.nombre?.includes(name))
-   
+
     return filtered
 }
 
-const createPokemonDbController = async (nombre, imagen, vida, ataque, defensa, velocidad) => {
-   
-    const [pokemon, created] = await Pokemon.findOrCreate({
-        where: {
-            nombre,
-            imagen,
-            vida,
-            ataque,
-            defensa,
-            velocidad
-        }
-    })
+const createPokemonDbController = async (data) => {
 
-    if (created) {
-        const [typesDb] = await Types.findOrCreate({ where: { nombre: nombre } });
-        await pokemon.addTypes(typesDb);
-    }
-    return pokemon
+    const newPokemon = await Pokemon.create({
+        nombre: data.nombre,
+        imagen:data.imagen,
+        vida:data.vida,
+        ataque: data.ataque,
+        defensa: data.defensa,
+        velocidad: data.velocidad,
+
+    })
+    return newPokemon
 
 }
 module.exports = {

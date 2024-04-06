@@ -3,7 +3,8 @@ const {
     getPokemonByIdController,
     getPokemonByNameController,
     createPokemonDbController
-} = require("../controllers/pokemonsControllers")
+} = require("../controllers/pokemonsControllers");
+const Pokemon = require("../models/Pokemon");
 
 const getPokemonHandler = async (req, res) => {
     try {
@@ -32,11 +33,11 @@ const getPokemonByIdHandler = async (req, res) => {
 }
 
 const createPokemonDbHandler = async (req, res) => {
-    const { nombre, imagen, vida, ataque, defensa, velocidad } = req.body;
     try {
+        const data = req.body;
+        const result  = await createPokemonDbController(data)
         
-        const response = await createPokemonDbController(nombre, imagen, vida, ataque, defensa, velocidad)
-        return res.status(200).json(response)
+        return res.status(200).json(result)
     } catch (error) {
         res.status(400).json({ error: error.message })
     }

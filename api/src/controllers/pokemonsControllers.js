@@ -1,5 +1,5 @@
 const axios = require('axios');
-const { Pokemon, Types } = require('../db')
+const { Pokemon, Type } = require('../db')
 const { Op } = require("sequelize");
 
 
@@ -51,8 +51,9 @@ const createPokemonDbController = async (data) => {
 
     const newPokemon = await Pokemon.create({
         nombre: data.nombre,
-        imagen:data.imagen,
-        vida:data.vida,
+        types: data.types,
+        imagen: data.imagen,
+        vida: data.vida,
         ataque: data.ataque,
         defensa: data.defensa,
         velocidad: data.velocidad,
@@ -61,9 +62,25 @@ const createPokemonDbController = async (data) => {
     return newPokemon
 
 }
+const getDbPokemon = async () => {
+    const pokemonsDb = await Pokemon.findAll({
+        include: {
+            model: Type,
+        },
+    });
+    const pokemonDb = pokemonsDb.map((pokemon) => {
+        const result = pokemon.toJSON();
+        return {
+            ...result,
+            types: result.types.map((type) => type.nombre),
+        };
+    });
+    return pokemonDb;
+}
 module.exports = {
     getPokemonController,
     getPokemonByNameController,
     getPokemonByIdController,
-    createPokemonDbController
+    createPokemonDbController,
+    getDbPokemon
 }

@@ -4,7 +4,7 @@ const { Op } = require("sequelize");
 
 
 const getPokemonController = async () => {
-    const pokemonApi = await axios.get('http://pokeapi.co/api/v2/pokemon?limit=300&offset=0')
+    const pokemonApi = await axios.get('http://pokeapi.co/api/v2/pokemon?limit=200&offset=0')
     const pokemonData = pokemonApi.data.results
 
     //Mapeo
@@ -24,8 +24,36 @@ const getPokemonController = async () => {
             peso: p.data.weight
         }
     })
-    console.log("Entro en la funcion")
-    return pokemonfromApi
+    const dbPokemons = await Pokemon.findAll({
+        //busco en la tabla los modelos que necesito
+        include: {
+            model: Type,
+            atributes: ["nombre"]
+        }
+    });
+    const dbDataPokemon = dbPokemons.map((p) => {
+        return {
+            id: p.id,
+            nombre: p.nombre.toLowerCase(),
+            //types: p.Type.map((t) => t.nombre),
+            imagen: p.imagen,
+            vida: p.vida,
+            ataque: p.ataque,
+            defensa: p.defensa,
+            velocidad: p.velocidad,
+            altura: p.altura,
+            peso: p.peso
+        };
+    });
+    // Esperar a que se resuelvan todas las promesas
+    const apiPokemonsData = await Promise.all(pokemonfromApi);
+    
+    // Combinar ambos conjuntos de Pokémon
+    const allPokemons = [...apiPokemonsData, ...dbDataPokemon];
+    console.log(allPokemons)
+
+    return allPokemons;
+
 }
 
 const getPokemonByIdController = async (id) => {
@@ -62,25 +90,10 @@ const createPokemonDbController = async (data) => {
     return newPokemon
 
 }
-const getDbPokemon = async () => {
-    const pokemonsDb = await Pokemon.findAll({
-        include: {
-            model: Type,
-        },
-    });
-    const pokemonDb = pokemonsDb.map((pokemon) => {
-        const result = pokemon.toJSON();
-        return {
-            ...result,
-            types: result.types.map((type) => type.nombre),
-        };
-    });
-    return pokemonDb;
-}
+
 module.exports = {
     getPokemonController,
     getPokemonByNameController,
     getPokemonByIdController,
-    createPokemonDbController,
-    getDbPokemon
+    createPokemonDbController
 }

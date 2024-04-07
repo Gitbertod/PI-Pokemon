@@ -17,7 +17,7 @@ const getPokemonHandler = async (req, res) => {
             return res.status(200).json(response)
         }
     } catch (error) {
-        return res.status(400).json({ error: "Entraste al error de getPokemon" })
+        return res.status(400).json({ error: error.message })
     }
 }
 

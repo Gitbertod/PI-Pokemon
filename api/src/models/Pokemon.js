@@ -41,5 +41,11 @@ module.exports = (sequelize) => {
       type: DataTypes.INTEGER
       
     },
+    created:{
+      type:DataTypes.BOOLEAN,
+      allowNull:false,
+      defaultValue:true
+
+    }
   });
 };

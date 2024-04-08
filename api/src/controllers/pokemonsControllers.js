@@ -1,6 +1,6 @@
 const axios = require('axios');
 const { Pokemon, Type } = require('../db')
-const { Op } = require("sequelize");
+const { Op, where } = require("sequelize");
 
 
 const getPokemonController = async () => {
@@ -47,7 +47,7 @@ const getPokemonController = async () => {
     });
     // Esperar a que se resuelvan todas las promesas
     const apiPokemonsData = await Promise.all(pokemonfromApi);
-    
+
     // Combinar ambos conjuntos de Pokémon
     const allPokemons = [...apiPokemonsData, ...dbDataPokemon];
     console.log(allPokemons)
@@ -76,7 +76,6 @@ const getPokemonByNameController = async (nombre) => {
 }
 
 const createPokemonDbController = async (data) => {
-
     const newPokemon = await Pokemon.create({
         nombre: data.nombre,
         types: data.types,
@@ -85,8 +84,17 @@ const createPokemonDbController = async (data) => {
         ataque: data.ataque,
         defensa: data.defensa,
         velocidad: data.velocidad,
+        created: true
 
     })
+
+    const type = data.types.map((e) => Number(e))
+    const typeBd = await Type.findAll({ where: { id: type } })
+
+    for (let i = 0; i < typeBd.length; i++) {
+        await newPokemon.addType(typeBd[i])
+
+    }
     return newPokemon
 
 }

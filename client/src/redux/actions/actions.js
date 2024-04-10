@@ -1,11 +1,11 @@
 import axios from "axios";
-import { GET_DETAIL, GET_POKEMONS } from "./types";
+import { GET_DETAIL, GET_POKEMONS, GET_BY_NAME } from "./types";
 
 export const getPokemons = () => {
     return async (dispatch) => {
         try {
             const { data } = await axios.get("http://localhost:3001/pokemons");
-            console.log(data)
+
 
             return dispatch({
                 type: GET_POKEMONS,
@@ -20,7 +20,7 @@ export const getPokemons = () => {
 export const getDetail = (id) => {
     return async (dispatch) => {
         try {
-            const { data } = await axios.get(`http://localhost:3001/pokemons${id}`);
+            const { data } = await axios.get(`http://localhost:3001/pokemons/` + id);
             return dispatch({
                 type: GET_DETAIL,
                 payload: data
@@ -29,4 +29,17 @@ export const getDetail = (id) => {
             console.log(error.message)
         }
     }
+}
+
+export const getByName = (nombre) => {
+    return async (dispatch) => {
+        try {
+            const { data } = await axios.get("http://localhost:3001/pokemons/?nombre=" + nombre);
+            console.log(data)
+            return dispatch({ type: GET_BY_NAME, payload: data });
+        } catch (error) {
+            console.log(error.message)
+        }
+    }
+
 }

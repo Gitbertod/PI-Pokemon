@@ -5,21 +5,16 @@ import { useDispatch, useSelector } from 'react-redux'
 
 import Cards from '../../components/cards/Cards'
 import Navbar from '../../components/navbar/Navbar'
-import { getPokemons } from '../../redux/actions/actions'
+import { getPokemons, getByName } from '../../redux/actions/actions'
 
 const Home = () => {
   const allPokemons = useSelector((state) => state.allPokemons)
   const nData = allPokemons
   const dispatch = useDispatch()
-  console.log(allPokemons)
-  try {
 
-  } catch (error) {
-
-  }
+  const [searchString, setSearchString] = useState("");
   useEffect(
     () => {
-
       const traer = async () => {
         try {
           dispatch(getPokemons())
@@ -28,10 +23,21 @@ const Home = () => {
         }
       }
       traer()
-    }, [dispatch])
+    }, [dispatch]
+  )
+
+  function handleChange(e) {
+    e.preventDefault()
+    setSearchString(e.target.value)
+  }
+
+  function handleSubmit() {
+    e.preventDefault()
+    dispatch(getDriverByName(searchString))
+  }
   return (
     <>
-      <Navbar></Navbar>
+      <Navbar handleChange={handleChange} handleSubmit={handleSubmit}></Navbar>
       <div></div>
       <Cards nData={nData} />
     </>

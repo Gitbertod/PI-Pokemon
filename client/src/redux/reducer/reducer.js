@@ -1,4 +1,5 @@
 import {
+    GET_BY_NAME,
     GET_DETAIL,
     GET_POKEMONS
 } from "../actions/types"
@@ -7,7 +8,8 @@ import {
 let initialState = {
     allPokemons: [],
     copyPokemons: [],
-    pokemonsDetail:[]
+    pokemon: [],
+    pokemonDetail: {}
 }
 
 function rootReducer(state = initialState, action) {
@@ -18,10 +20,16 @@ function rootReducer(state = initialState, action) {
                 allPokemons: action.payload,
                 copyPokemons: action.payload
             }
-            case GET_DETAIL:
-                return {
-                    ...state,
-                }
+        case GET_DETAIL:
+            return {
+                ...state,
+                pokemonDetail: action.payload
+            }
+        case GET_BY_NAME:
+            return {
+                ...state,
+                pokemon: action.payload
+            }
         default:
             return { ...state }
     }

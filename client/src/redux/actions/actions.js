@@ -21,6 +21,7 @@ export const getDetail = (id) => {
     return async (dispatch) => {
         try {
             const { data } = await axios.get(`http://localhost:3001/pokemons/` + id);
+          
             return dispatch({
                 type: GET_DETAIL,
                 payload: data
@@ -34,9 +35,13 @@ export const getDetail = (id) => {
 export const getByName = (nombre) => {
     return async (dispatch) => {
         try {
-            const { data } = await axios.get("http://localhost:3001/pokemons/?nombre=" + nombre);
-            console.log(data)
-            return dispatch({ type: GET_BY_NAME, payload: data });
+           
+            const { data } = await axios.get(`http://localhost:3001/pokemons?nombre=${nombre}`);
+            
+            return dispatch({ 
+                type: GET_BY_NAME, 
+                payload: data 
+            });
         } catch (error) {
             console.log(error.message)
         }

@@ -5,26 +5,17 @@ import { useDispatch, useSelector } from 'react-redux'
 
 import Cards from '../../components/cards/Cards'
 import Navbar from '../../components/navbar/Navbar'
-import { getPokemons, getByName } from '../../redux/actions/actions'
+import { getByName } from '../../redux/actions/actions'
+import Pagination from '../../components/pagination/Pagination'
 
 const Home = () => {
-  const allPokemons = useSelector((state) => state.allPokemons)
-  const nData = allPokemons
-  const dispatch = useDispatch()
 
-  const [searchString, setSearchString] = useState("");
-  useEffect(
-    () => {
-      const traer = async () => {
-        try {
-          dispatch(getPokemons())
-        } catch (error) {
-          console.log(error.message)
-        }
-      }
-      traer()
-    }, [dispatch]
-  )
+
+  const dispatch = useDispatch()
+  const allPokemons = useSelector((state)=>state.copyPokemons)
+
+  const [dataQt, setDataQt] = useState(12);
+  const [currentPage, setCurrentPage] = useState(1)
 
   function handleChange(e) {
     e.preventDefault()
@@ -33,13 +24,23 @@ const Home = () => {
 
   function handleSubmit() {
     e.preventDefault()
-    dispatch(getDriverByName(searchString))
+    dispatch(getByName(searchString))
   }
+
+  const indexFinal = currentPage * dataQt;
+  const indexInicial = indexFinal - dataQt;
+  const nData = allPokemons.slice(indexInicial, indexFinal)
+  const nPages = Math.ceil(allPokemons.length / dataQt);
+
   return (
     <>
       <Navbar handleChange={handleChange} handleSubmit={handleSubmit}></Navbar>
-      <div></div>
-      <Cards nData={nData} />
+      <Pagination
+        setCurrentPage={setCurrentPage}
+        currentPage={currentPage}
+        nPages={nPages}
+      />
+      <Cards nData={nData}/>
     </>
   )
 }

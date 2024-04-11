@@ -8,8 +8,8 @@ const composeEnhacers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 
  const store = createStore(
-    rootReducer,applyMiddleware(thunk)
-    //composeEnhacers(applyMiddleware(thunk))
+    rootReducer,/*applyMiddleware(thunk)*/
+    composeEnhacers(applyMiddleware(thunk))
 );
 
 export default store

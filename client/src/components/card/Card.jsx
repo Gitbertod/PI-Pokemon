@@ -2,8 +2,10 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import styles from './card.module.css'
 
-const Card = ({ pokemon }) => {
-  const { id, nombre, imagen, tipos } = pokemon
+
+
+const Card = ({ id,nombre,imagen, tipos }) => {
+  //const { id, nombre, imagen, tipos } = pokemon
   return (
     <div key={id} className={styles.card}>
       <h3>Nombre: {nombre}</h3>

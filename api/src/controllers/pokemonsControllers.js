@@ -4,7 +4,7 @@ const { Op, where } = require("sequelize");
 
 
 const getPokemonController = async () => {
-    const pokemonApi = await axios.get('http://pokeapi.co/api/v2/pokemon?limit=20&offset=0')
+    const pokemonApi = await axios.get('http://pokeapi.co/api/v2/pokemon?limit=120&offset=0')
     const pokemonData = pokemonApi.data.results
 
     //Mapeo
@@ -50,7 +50,7 @@ const getPokemonController = async () => {
 
     // Combinar ambos conjuntos de Pokémon
     const allPokemons = [...apiPokemonsData, ...dbDataPokemon];
-    console.log(allPokemons)
+    
 
     return allPokemons;
 

@@ -15,6 +15,7 @@ const getPokemonController = async () => {
         return {
             id: p.data.id,
             nombre: p.data.name,
+            types:p.data.types.map((pok) => pok.type.name),
             imagen: p.data.sprites.other.home.front_default,
             vida: p.data.stats[0].base_stat,
             ataque: p.data.stats[1].base_stat,

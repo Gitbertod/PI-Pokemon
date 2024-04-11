@@ -4,12 +4,12 @@ import styles from './card.module.css'
 
 
 
-const Card = ({ id,nombre,imagen, tipos }) => {
+const Card = ({ id,nombre,imagen, types }) => {
   //const { id, nombre, imagen, tipos } = pokemon
   return (
     <div key={id} className={styles.card}>
       <h3>Nombre: {nombre}</h3>
-      <p>Tipos:</p>
+      <p>Tipo: {types}</p>
       <Link to={`/detail/${id}`} key={id}>
         <img src={imagen}></img>
       </Link>

@@ -42,6 +42,7 @@ video {
     border: none;
     outline: none;
     border-radius: 4px;
+    color: gray;
 }
 
 .btn {
@@ -54,4 +55,8 @@ video {
     color: white;
     cursor: pointer;
     margin: 20px ;
+}
+
+div select{
+    width: 200px;
 }

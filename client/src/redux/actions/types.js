@@ -1,6 +1,7 @@
 export const GET_POKEMONS = "GET_POKEMONS";
 export const SEARCH_POKEMONS = "SEARCH_POKEMONS";
-export const LOADTYPES = "LOADTYPES";
+export const CREATE_POKEMON = "CREATE_POKEMON";
+export const GET_TYPES = "GET_TYPES";
 export const GET_DETAIL = "GET_DETAIL";
 export const GET_BY_NAME = "GET_BY_NAME";
 export const FILTERDBAPI = "FILTERDBAPI";

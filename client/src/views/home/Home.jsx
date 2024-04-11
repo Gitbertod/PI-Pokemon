@@ -41,6 +41,12 @@ const Home = () => {
         nPages={nPages}
       />
       <Cards nData={nData}/>
+
+      <Pagination
+        setCurrentPage={setCurrentPage}
+        currentPage={currentPage}
+        nPages={nPages}
+      />
     </>
   )
 }

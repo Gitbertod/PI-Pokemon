@@ -12,7 +12,7 @@ const Home = () => {
 
 
   const dispatch = useDispatch()
-  const allPokemons = useSelector((state)=>state.copyPokemons)
+  const allPokemons = useSelector((state)=>state.allPokemons)
 
   const [dataQt, setDataQt] = useState(12);
   const [currentPage, setCurrentPage] = useState(1)

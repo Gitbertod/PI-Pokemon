@@ -63,19 +63,19 @@ export const getTypes = () => {
     }
 }
 
-export const createPokemon = (info) => {
-    return async (dispatch) => {
-        try {
-            const response = await axios.post('http://localhost:3001/pokemons/', info)
-            dispatch({
-                type: CREATE_POKEMON,
-                payload: response.data
-            });
-            alert("Pokemon creado con exito");
-            return response;
-        } catch (error) {
-            console.log(error.message)
-        }
-    }
-}
+// export const createPokemon = (info) => {
+//     return async (dispatch) => {
+//         try {
+//             const response = await axios.post('http://localhost:3001/pokemons/', info)
+//             dispatch({
+//                 type: CREATE_POKEMON,
+//                 payload: response.data
+//             });
+//             alert("Pokemon creado con exito");
+//             return response;
+//         } catch (error) {
+//             console.log(error.message)
+//         }
+//     }
+// }
 

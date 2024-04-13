@@ -15,7 +15,7 @@ const getPokemonController = async () => {
         return {
             id: p.data.id,
             nombre: p.data.name,
-            types:p.data.types.map((pok) => pok.type.name),
+            Types: p.data.types.map((pok) => pok.type.name),
             imagen: p.data.sprites.other.home.front_default,
             vida: p.data.stats[0].base_stat,
             ataque: p.data.stats[1].base_stat,
@@ -25,33 +25,33 @@ const getPokemonController = async () => {
             peso: p.data.weight
         }
     })
+   
     const dbPokemons = await Pokemon.findAll({
         //busco en la tabla los modelos que necesito
         include: {
             model: Type,
-            atributes: ["nombre"]
+            attributes: ["nombre"],
+            through: { attributes: [] }
         }
     });
+
+    const pokemons = [];
+    dbPokemons.map((p) => pokemons.push(p.dataValues))
+    //console.log(pokemons)
     const dbDataPokemon = dbPokemons.map((p) => {
         return {
-            id: p.id,
-            nombre: p.nombre.toLowerCase(),
+            ...p, Types: p.Types.nombre
             //types: p.Type.map((t) => t.nombre),
-            imagen: p.imagen,
-            vida: p.vida,
-            ataque: p.ataque,
-            defensa: p.defensa,
-            velocidad: p.velocidad,
-            altura: p.altura,
-            peso: p.peso
+
         };
     });
+    //console.log(dbDataPokemon)
     // Esperar a que se resuelvan todas las promesas
     const apiPokemonsData = await Promise.all(pokemonfromApi);
 
     // Combinar ambos conjuntos de Pokémon
-    const allPokemons = [...apiPokemonsData, ...dbDataPokemon];
-    
+    const allPokemons = [...apiPokemonsData, ...pokemons];
+
 
     return allPokemons;
 
@@ -96,6 +96,7 @@ const createPokemonDbController = async (data) => {
         await newPokemon.addType(typeBd[i])
 
     }
+    console.log()
     return newPokemon
 
 }

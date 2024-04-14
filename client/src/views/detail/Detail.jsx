@@ -11,7 +11,6 @@ const Detail = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
   const pokemon = useSelector((state) => state.pokemonDetail);
-  console.log(pokemon.Types)
 
   useEffect(() => {
     const pokeRender = async () => {
@@ -22,8 +21,11 @@ const Detail = () => {
       }
     }
     pokeRender()
-  }, [ dispatch])
-Type
+  }, [dispatch])
+  console.log(pokemon.Types)
+
+  const hasObjectWithName = pokemon.Types && pokemon.Types.some((item) => typeof item === 'object' && item.hasOwnProperty('nombre'));
+
   return (
     <div className={styles.detail}>
       <h3>{pokemon.nombre}</h3>
@@ -33,8 +35,8 @@ Type
       <p>Altura: {pokemon.altura}</p>
       <p>Peso: {pokemon.peso}</p>
       <p>Velocidad: {pokemon.velocidad}</p>
-      <p>Tipo:</p>
-      {pokemon.Types[0].nombre}
+      <p>Tipo: {pokemon.Types}</p>
+
       <img src={pokemon.imagen}></img>
 
     </div>

@@ -6,6 +6,7 @@ import styles from './navbar.module.css'
 import SearchBar from '../searchBar/SearchBar'
 import { useDispatch, useSelector } from 'react-redux'
 import { getByName } from '../../redux/actions/actions'
+import BySource from '../filters/BySource'
 
 const Navbar = () => {
   const dispatch = useDispatch()
@@ -32,6 +33,9 @@ const Navbar = () => {
         <Link to="/create">
           <button type='submit' >Crear Pokémon</button>
         </Link>
+        <div>
+          <BySource></BySource>
+        </div>
 
       </form>
 

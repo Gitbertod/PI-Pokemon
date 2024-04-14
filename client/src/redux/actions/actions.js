@@ -1,5 +1,5 @@
 import axios from "axios";
-import { GET_DETAIL, GET_POKEMONS, GET_BY_NAME, GET_TYPES } from "./types";
+import { GET_DETAIL, GET_POKEMONS, GET_BY_NAME, GET_TYPES,FILTERDBAPI } from "./types";
 
 export const getPokemons = () => {
     return async (dispatch) => {
@@ -60,6 +60,13 @@ export const getTypes = () => {
         } catch (error) {
             console.log(error.message)
         }
+    }
+}
+export const filterDbApi = (value) => {
+    
+    return {
+        type: FILTERDBAPI,
+        payload : value
     }
 }
 

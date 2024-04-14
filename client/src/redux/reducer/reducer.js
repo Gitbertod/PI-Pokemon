@@ -3,7 +3,8 @@ import {
     GET_BY_NAME,
     GET_DETAIL,
     GET_POKEMONS,
-    GET_TYPES
+    GET_TYPES,
+    FILTERDBAPI
 } from "../actions/types"
 
 
@@ -21,7 +22,7 @@ function rootReducer(state = initialState, action) {
             return {
                 ...state,
                 allPokemons: action.payload,
-                copyPokemons: action.payload
+                copyPokemons: [...action.payload]
             }
         case GET_DETAIL:
             return {
@@ -38,10 +39,30 @@ function rootReducer(state = initialState, action) {
                 ...state,
                 types: action.payload
             }
+        case FILTERDBAPI:
+            console.log("Enter")
+            if (action.payload === "db") {
+                const result = state.copyPokemons.filter((e) => e.created)
+                return {
+                    ...state,
+                    allPokemons: result
+                }
+            } if (action.payload === "api") {
+                const result = state.copyPokemons.filter((e) => e.created === false)
+                return {
+                    ...state,
+                    allPokemons: result
+                }
+            } else {
+                return {
+                    ...state,
+                    allPokemons: state.copyPokemons
+                }
+            }
         case CREATE_POKEMON:
             return {
                 ...state,
-            }    
+            }
         default:
             return { ...state }
     }

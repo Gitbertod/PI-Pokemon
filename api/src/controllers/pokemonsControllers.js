@@ -22,7 +22,8 @@ const getPokemonController = async () => {
             defensa: p.data.stats[2].base_stat,
             velocidad: p.data.stats[5].base_stat,
             altura: p.data.height,
-            peso: p.data.weight
+            peso: p.data.weight,
+            created: false
         }
     })
    
@@ -36,21 +37,27 @@ const getPokemonController = async () => {
     });
 
     const pokemons = [];
-    dbPokemons.map((p) => pokemons.push(p.dataValues))
-    //console.log(pokemons)
-    const dbDataPokemon = dbPokemons.map((p) => {
+    const result = dbPokemons.map((p) => {
         return {
-            ...p, Types: p.Types.nombre
-            //types: p.Type.map((t) => t.nombre),
-
-        };
-    });
+            id: p.id,
+            nombre: p.nombre,
+            Types: p.Types.map((e) => e.nombre),
+            imagen: p.imagen,
+            vida: p.vida,
+            ataque: p.ataque,
+            defensa: p.defensa,
+            velocidad: p.velocidad,
+            altura: p.altura,
+            peso: p.peso,
+            created:p.created
+        }
+    })
     //console.log(dbDataPokemon)
     // Esperar a que se resuelvan todas las promesas
     const apiPokemonsData = await Promise.all(pokemonfromApi);
 
     // Combinar ambos conjuntos de Pokémon
-    const allPokemons = [...apiPokemonsData, ...pokemons];
+    const allPokemons = [...apiPokemonsData, ...result];
 
 
     return allPokemons;

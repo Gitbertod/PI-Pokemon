@@ -27,6 +27,8 @@ const Home = () => {
     dispatch(getByName(searchString))
   }
 
+
+
   const indexFinal = currentPage * dataQt;
   const indexInicial = indexFinal - dataQt;
   const nData = allPokemons.slice(indexInicial, indexFinal)

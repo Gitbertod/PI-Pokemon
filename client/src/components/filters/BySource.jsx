@@ -11,7 +11,7 @@ const BySource = () => {
   }
   return (
     <div>
-      <label htmlFor="">Filtrar por: </label>
+      <label htmlFor="">Filtrar por origen: </label>
       <select name='' onChange={handleFilterApiDb}>
         <option value="all">Todos</option>
         <option value="api">API</option>

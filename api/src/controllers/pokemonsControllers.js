@@ -4,7 +4,7 @@ const { Op, where } = require("sequelize");
 
 
 const getPokemonController = async () => {
-    const pokemonApi = await axios.get('http://pokeapi.co/api/v2/pokemon?limit=120&offset=0')
+    const pokemonApi = await axios.get('http://pokeapi.co/api/v2/pokemon?limit=20&offset=0')
     const pokemonData = pokemonApi.data.results
 
     //Mapeo
@@ -26,7 +26,7 @@ const getPokemonController = async () => {
             created: false
         }
     })
-   
+
     const dbPokemons = await Pokemon.findAll({
         //busco en la tabla los modelos que necesito
         include: {
@@ -35,8 +35,6 @@ const getPokemonController = async () => {
             through: { attributes: [] }
         }
     });
-
-    const pokemons = [];
     const result = dbPokemons.map((p) => {
         return {
             id: p.id,
@@ -49,9 +47,12 @@ const getPokemonController = async () => {
             velocidad: p.velocidad,
             altura: p.altura,
             peso: p.peso,
-            created:p.created
+            created: p.created
         }
     })
+
+
+
     //console.log(dbDataPokemon)
     // Esperar a que se resuelvan todas las promesas
     const apiPokemonsData = await Promise.all(pokemonfromApi);
@@ -78,9 +79,26 @@ const getPokemonByIdController = async (id) => {
 const getPokemonByNameController = async (nombre) => {
     const name = nombre.toLowerCase()
     const allPokemons = await getPokemonController()
-    const filtered = await allPokemons.filter(p => p?.nombre?.includes(name))
+    const filter = allPokemons.filter((p) => p.nombre.includes(name))
 
-    return filtered
+    const response = filter.map((p) => {
+        return {
+            id: p.id,
+            nombre: p.nombre,
+            Types: p.Types.map((e) => e.nombre),
+            imagen: p.imagen,
+            vida: p.vida,
+            ataque: p.ataque,
+            defensa: p.defensa,
+            velocidad: p.velocidad,
+            altura: p.altura,
+            peso: p.peso,
+            created: p.created
+        }
+    })
+    console.log(response)
+
+    return response
 }
 
 const createPokemonDbController = async (data) => {

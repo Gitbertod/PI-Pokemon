@@ -1,5 +1,5 @@
 import axios from "axios";
-import { GET_DETAIL, GET_POKEMONS, GET_BY_NAME, GET_TYPES,FILTERDBAPI } from "./types";
+import { GET_DETAIL, GET_POKEMONS, GET_BY_NAME, GET_TYPES,FILTERDBAPI,FILTER_TYPE,ORDER_NAME } from "./types";
 
 export const getPokemons = () => {
     return async (dispatch) => {
@@ -69,6 +69,27 @@ export const filterDbApi = (value) => {
         payload : value
     }
 }
+
+export const filterType = (payload) => {
+    return {
+        type: FILTER_TYPE,
+        payload
+    };
+};
+
+export const orderName = (order) =>{
+    return {
+        type:ORDER_NAME,
+        payload: order
+    }
+}
+
+export const orderAttack = (payload) => {
+    return {
+        type: ORDER_ATTACK,
+        payload
+    };
+};
 
 // export const createPokemon = (info) => {
 //     return async (dispatch) => {

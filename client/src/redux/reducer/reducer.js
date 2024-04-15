@@ -4,7 +4,10 @@ import {
     GET_DETAIL,
     GET_POKEMONS,
     GET_TYPES,
-    FILTERDBAPI
+    FILTERDBAPI,
+    FILTER_TYPE,
+    ORDER_NAME,
+    ORDER_ATTACK
 } from "../actions/types"
 
 
@@ -58,6 +61,36 @@ function rootReducer(state = initialState, action) {
                     ...state,
                     allPokemons: state.copyPokemons
                 }
+            }
+        case FILTER_TYPE:
+            const filterTypes = action.payload === "all"
+                ? state.allPokemons
+                : state.allPokemons.filter((p) => p.Types.includes(action.payload))
+            return {
+                ...state,
+                allPokemons: filterTypes
+            }
+        case ORDER_NAME:
+            if (action.payload === "a-z") {
+                const orderByName = [...state.copyPokemons].sort((a, b) => a.nombre.localeCompare(b.name))
+                return {
+                    ...state,
+                    allPokemons: [...orderByName]
+                }
+            } else if (action.payload === "z-a") {
+                const orderByName = [...state.allPokemons].sort((a, b) => b.nombre.localeCompare(a.name))
+                return {
+                    ...state,
+                    allPokemons: [...orderByName]
+                }
+            }
+            case ORDER_ATTACK:
+            const sortAttack = action.payload === "min"
+                ? [...state.pokemon].sort((a, b) => a.attack - b.attack)
+                : [...state.pokemon].sort((a, b) => b.attack - a.attack)
+            return {
+                ...state,
+                pokemon: sortAttack
             }
         case CREATE_POKEMON:
             return {

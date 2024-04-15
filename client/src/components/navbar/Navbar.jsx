@@ -7,6 +7,8 @@ import SearchBar from '../searchBar/SearchBar'
 import { useDispatch, useSelector } from 'react-redux'
 import { getByName } from '../../redux/actions/actions'
 import BySource from '../filters/BySource'
+import ByType from '../filters/ByType'
+import ByName from '../filters/ByName'
 
 const Navbar = () => {
   const dispatch = useDispatch()
@@ -35,6 +37,8 @@ const Navbar = () => {
         </Link>
         <div>
           <BySource></BySource>
+          <ByType></ByType>
+          <ByName></ByName>
         </div>
 
       </form>

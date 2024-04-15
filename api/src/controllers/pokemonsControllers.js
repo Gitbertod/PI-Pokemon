@@ -98,12 +98,12 @@ const getPokemonByNameController = async (nombre) => {
     })
     console.log(response)
 
-    return response
+    return filter
 }
 
 const createPokemonDbController = async (data) => {
     const newPokemon = await Pokemon.create({
-        nombre: data.nombre,
+        nombre: data.nombre.toLowerCase(),
         types: data.types,
         imagen: data.imagen,
         vida: data.vida,

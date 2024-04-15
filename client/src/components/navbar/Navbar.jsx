@@ -9,6 +9,7 @@ import { getByName } from '../../redux/actions/actions'
 import BySource from '../filters/BySource'
 import ByType from '../filters/ByType'
 import ByName from '../filters/ByName'
+import ByAttack from '../filters/ByAttack'
 
 const Navbar = () => {
   const dispatch = useDispatch()
@@ -39,6 +40,7 @@ const Navbar = () => {
           <BySource></BySource>
           <ByType></ByType>
           <ByName></ByName>
+          <ByAttack></ByAttack>
         </div>
 
       </form>

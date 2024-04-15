@@ -1,5 +1,5 @@
 import axios from "axios";
-import { GET_DETAIL, GET_POKEMONS, GET_BY_NAME, GET_TYPES,FILTERDBAPI,FILTER_TYPE,ORDER_NAME } from "./types";
+import { GET_DETAIL, GET_POKEMONS, GET_BY_NAME, GET_TYPES,FILTERDBAPI,FILTER_TYPE,ORDER_NAME,ORDER_ATTACK } from "./types";
 
 export const getPokemons = () => {
     return async (dispatch) => {

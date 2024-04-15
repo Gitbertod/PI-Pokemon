@@ -84,13 +84,13 @@ function rootReducer(state = initialState, action) {
                     allPokemons: [...orderByName]
                 }
             }
-            case ORDER_ATTACK:
+        case ORDER_ATTACK:
             const sortAttack = action.payload === "min"
-                ? [...state.pokemon].sort((a, b) => a.attack - b.attack)
-                : [...state.pokemon].sort((a, b) => b.attack - a.attack)
+                ? [...state.allPokemons].sort((a, b) => a.ataque - b.ataque)
+                : [...state.allPokemons].sort((a, b) => b.ataque - a.ataque)
             return {
                 ...state,
-                pokemon: sortAttack
+                allPokemons: sortAttack
             }
         case CREATE_POKEMON:
             return {

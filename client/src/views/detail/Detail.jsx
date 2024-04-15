@@ -3,6 +3,7 @@ import { useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { getDetail } from '../../redux/actions/actions';
+import { cleanDetail } from '../../redux/actions/actions';
 
 import styles from './detail.module.css'
 
@@ -21,6 +22,7 @@ const Detail = () => {
       }
     }
     pokeRender()
+    return () => dispatch(cleanDetail());
   }, [dispatch])
   console.log(pokemon.Types)
 

@@ -7,7 +7,8 @@ import {
     FILTERDBAPI,
     FILTER_TYPE,
     ORDER_NAME,
-    ORDER_ATTACK
+    ORDER_ATTACK,
+    CLEAN_DETAIL
 } from "../actions/types"
 
 
@@ -17,6 +18,7 @@ let initialState = {
     pokemon: [],
     pokemonDetail: {},
     types: []
+
 }
 
 function rootReducer(state = initialState, action) {
@@ -32,6 +34,11 @@ function rootReducer(state = initialState, action) {
                 ...state,
                 pokemonDetail: action.payload
             }
+        case CLEAN_DETAIL:
+            return {
+                ...state,
+                pokemonDetail: {}
+            }
         case GET_BY_NAME:
             return {
                 ...state,
@@ -45,52 +52,52 @@ function rootReducer(state = initialState, action) {
         case FILTERDBAPI:
             console.log("Enter")
             if (action.payload === "db") {
-                const result = state.copyPokemons.filter((e) => e.created)
+                const result = state.allPokemons.filter((e) => e.created)
                 return {
                     ...state,
-                    allPokemons: result
+                    copyPokemons: result
                 }
             } if (action.payload === "api") {
-                const result = state.copyPokemons.filter((e) => e.created === false)
+                const result = state.allPokemons.filter((e) => e.created === false)
                 return {
                     ...state,
-                    allPokemons: result
+                    copyPokemons: result
                 }
             } else {
                 return {
                     ...state,
-                    allPokemons: state.copyPokemons
+                    copyPokemons: state.allPokemons
                 }
             }
         case FILTER_TYPE:
             const filterTypes = action.payload === "all"
-                ? state.allPokemons
-                : state.allPokemons.filter((p) => p.Types.includes(action.payload))
+                ? state.copyPokemons
+                : state.copyPokemons.filter((p) => p.Types.includes(action.payload))
             return {
                 ...state,
-                allPokemons: filterTypes
+                copyPokemons: filterTypes
             }
         case ORDER_NAME:
             if (action.payload === "a-z") {
-                const orderByName = [...state.copyPokemons].sort((a, b) => a.nombre.localeCompare(b.name))
+                const orderByName = [...state.copyPokemons].sort((a, b) => a.nombre.localeCompare(b.nombre))
                 return {
                     ...state,
-                    allPokemons: [...orderByName]
+                    copyPokemons: orderByName
                 }
             } else if (action.payload === "z-a") {
-                const orderByName = [...state.allPokemons].sort((a, b) => b.nombre.localeCompare(a.name))
+                const orderByName = [...state.copyPokemons].sort((a, b) => b.nombre.localeCompare(a.nombre))
                 return {
                     ...state,
-                    allPokemons: [...orderByName]
+                    copyPokemons: orderByName
                 }
             }
         case ORDER_ATTACK:
             const sortAttack = action.payload === "min"
-                ? [...state.allPokemons].sort((a, b) => a.ataque - b.ataque)
-                : [...state.allPokemons].sort((a, b) => b.ataque - a.ataque)
+                ? [...state.copyPokemons].sort((a, b) => a.ataque - b.ataque)
+                : [...state.copyPokemons].sort((a, b) => b.ataque - a.ataque)
             return {
                 ...state,
-                allPokemons: sortAttack
+                copyPokemons: sortAttack
             }
         case CREATE_POKEMON:
             return {

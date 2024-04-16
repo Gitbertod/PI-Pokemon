@@ -15,7 +15,14 @@ const Landing = () => {
       <h3>Bienvenido a la API </h3>
       <img src={logo}></img>
       <Link to="/home">
-        <button >ENTRAR</button>
+        <button>
+          <span className={styles.circle1}></span>
+          <span className={styles.circle1}></span>
+          <span className={styles.circle1}></span>
+          <span className={styles.circle1}></span>
+          <span className={styles.circle1}></span>
+          <span className={styles.circle1}>Entrar</span>
+        </button>
       </Link>
     </div>
 

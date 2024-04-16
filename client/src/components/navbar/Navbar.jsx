@@ -15,26 +15,37 @@ const Navbar = () => {
   const dispatch = useDispatch()
   const [searchString, setSearchString] = useState("");
 
-  
+
   function handleChange(e) {
     e.preventDefault()
     setSearchString(e.target.value)
   }
-  
+
   function handleSubmit(e) {
     e.preventDefault()
     dispatch(getByName(searchString))
   }
-  
-  
+
+
   return (
     <div className={styles.navbar}>
       <form className={styles.navbar} onChange={handleChange}>
-        <img src={logo} alt="" />
-        <SearchBar handleChange={handleChange} handleSubmit={handleSubmit} searchString= {searchString}></SearchBar>
-        
+        <Link to={"/"}>
+          <img src={logo} alt="" />
+        </Link>
+
+        <SearchBar handleChange={handleChange} handleSubmit={handleSubmit} searchString={searchString}></SearchBar>
+
         <Link to="/create">
-          <button type='submit' >Crear Pokémon</button>
+          <button type='submit'>
+            <span className={styles.circle1}></span>
+            <span className={styles.circle1}></span>
+            <span className={styles.circle1}></span>
+            <span className={styles.circle1}></span>
+            <span className={styles.circle1}></span>
+            <span className={styles.circle1}>Crear</span>
+          </button>
+
         </Link>
         <div>
           <BySource></BySource>

@@ -4,6 +4,7 @@ import styles from './cards.module.css'
 import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { getPokemons } from '../../redux/actions/actions'
+import Spinner from '../spinner/Spinner'
 
 
 const Cards = ({nData}) => {
@@ -37,7 +38,7 @@ const Cards = ({nData}) => {
             ))
           )
             : (
-              <h1>No hay coincidencias</h1>
+              <Spinner></Spinner>
             )
         }
       </div>

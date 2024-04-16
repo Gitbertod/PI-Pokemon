@@ -11,3 +11,8 @@
 .navbar img {
     width: 125px;
 }
+
+.navbar select {
+    width: 100px;
+}
+

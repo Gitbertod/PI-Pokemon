@@ -28,7 +28,6 @@ p {
 
 .card img{
     margin-top: 10px;
-    width: 300px;
-    
-
+    width: 275px;
+    z-index: 1 ;
 }

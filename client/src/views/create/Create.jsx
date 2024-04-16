@@ -6,6 +6,7 @@ import styles from './create.module.css'
 import BgVideo from '../../assets/scorbunny.mp4'
 import { getTypes } from '../../redux/actions/actions';
 import { postPokemon } from '../../controller/controller';
+import validate from './validate';
 const Create = () => {
   const dispatch = useDispatch();
   const types = useSelector((state) => state.types);
@@ -20,12 +21,18 @@ const Create = () => {
     velocidad: 0
   }
   const [newPokemon, setNewPokemon] = useState({ ...initialPokemon });
+  const [errors, setErrors] = useState({})
 
   function handleChange(e) {
     setNewPokemon({
       ...newPokemon,
       [e.target.name]: e.target.value
     })
+
+    setErrors(validate({
+      ...newPokemon,
+      [e.target.name]: e.target.value
+    }));
   }
 
   const handleSubmit = async (e) => {
@@ -36,107 +43,163 @@ const Create = () => {
   }
 
   const handleSelect = (event) => {
-    setNewPokemon({
-      ...newPokemon,
-      types: [...newPokemon.types, event.target.value]
-    });
+    const value = event.target.value;
+    if (event.target.checked) {
+      // Agrega el valor al array si no está repetido
+      if (!newPokemon.types.includes(value)) {
+        setNewPokemon({
+          ...newPokemon,
+          types: [...newPokemon.types, value],
+        });
+      }
+    } else{
+      setNewPokemon({
+        ...newPokemon,
+        types: newPokemon.types.filter((item) => item !== value),
+      });
+    }
+    
+    
+    // setNewPokemon({
+    //   ...newPokemon,
+    //   types: [...newPokemon.types, event.target.value]
+    // });
+
 
   };
 
   useEffect(() => {
     dispatch(getTypes());
   }, []);
+
+
   return (
     <div className={styles.wrapper}>
       <video muted autoPlay loop>
         <source src={BgVideo} type="video/mp4" />
       </video>
-      <h1 className={styles.titulo}>Crea tu Pokémon</h1>
-      <form onSubmit={handleSubmit}>
-        <div className={styles.inputbox}>
-          <label htmlFor="nombre"></label>
-          <input
-            type="text"
-            name='nombre'
-            placeholder='Nombre'
-            onChange={handleChange}
-            value={newPokemon.nombre}
-          />
+      <div className={styles.container}>
+        <form onSubmit={handleSubmit}>
+          <h1 className={styles.titulo}>Crea tu Pokémon</h1>
+          <div className={styles.inputbox}>
+            <label htmlFor="nombre"></label>
+            <input
+              type="text"
+              name='nombre'
+              placeholder='Nombre'
+              onChange={handleChange}
+              value={newPokemon.nombre}
+            />
+            {errors.nombre && (
+              <div className={styles.errorContainer}>
+                <p>{errors.nombre}</p>
+              </div>
+            )}
+          </div>
 
-        </div>
+          <div className={styles.inputbox}>
+            <label htmlFor="imagen">Imagen: </label>
+            <input
+              type="text"
+              name='imagen'
+              onChange={handleChange}
+              placeholder='Link de la imagen'
+              value={newPokemon.imagen}
+            />
+            {errors.imagen && (
+              <div className={styles.errorContainer}>
+                <p>{errors.imagen}</p>
+              </div>
+            )}
+            <img src={newPokemon.imagen} style={{ width: "200px" }} />
+          </div>
 
-        <div className={styles.inputbox}>
-          <label htmlFor="imagen"></label>
-          <input
-            type="text"
-            name='imagen'
-            onChange={handleChange}
-            placeholder='Link de la imagen'
-            value={newPokemon.imagen}
-          />
-          <img src={newPokemon.imagen} style={{ width: "200px" }} />
-        </div>
+          <div className={styles.inputbox}>
+            <label htmlFor="vida">Puntos de vida: </label>
+            <input
+              type="number"
+              name='vida'
+              onChange={handleChange}
+              placeholder='Vida'
+              value={newPokemon.vida}
 
-        <div className={styles.inputbox}>
-          <label htmlFor="vida"></label>
-          <input
-            type="number"
-            name='vida'
-            onChange={handleChange}
-            placeholder='Vida'
-            value={newPokemon.vida}
+            />
+            {errors.vida && (
+              <div className={styles.errorContainer}>
+                <p>{errors.vida}</p>
+              </div>
+            )}
+          </div>
+          <div className={styles.inputbox}>
+            <label htmlFor="ataque">Poder de ataque:   </label>
+            <input
+              type="number"
+              name='ataque'
+              placeholder='Ataque'
+              onChange={handleChange}
+              value={newPokemon.ataque}
+            />
+            {errors.ataque && (
+              <div className={styles.errorContainer}>
+                <p>{errors.ataque}</p>
+              </div>
+            )}
+          </div>
 
-          />
-        </div>
-        <div className={styles.inputbox}>
-          <label htmlFor="ataque"></label>
-          <input
-            type="number"
-            name='ataque'
-            placeholder='Ataque'
-            onChange={handleChange}
-            value={newPokemon.ataque}
-          />
-        </div>
+          <div className={styles.inputbox}>
+            <label htmlFor="defensa">Defensa:</label>
+            <input
+              type="number"
+              name='defensa'
+              placeholder='Defensa'
+              onChange={handleChange}
+              value={newPokemon.defensa}
+            />
+            {errors.defensa && (
+              <div className={styles.errorContainer}>
+                <p>{errors.defensa}</p>
+              </div>
+            )}
+          </div>
+          <div className={styles.inputbox}>
+            <label htmlFor="velocidad">Velocidad: </label>
+            <input
+              type="number"
+              name='velocidad'
+              placeholder='Velocidad'
+              onChange={handleChange}
+              value={newPokemon.velocidad}
+            />
+            {errors.velocidad && (
+              <div className={styles.errorContainer}>
+                <p>{errors.velocidad}</p>
+              </div>
+            )}
+          </div>
+          <div className={styles.teamsSelect}>
+            <h3>Tipo</h3>
+            {types.map((e, index) => (
+              <label key={index}>
+                <input
+                  type="checkbox"
+                  name="types"
+                  value={e.id}
+                  onChange={(event) => handleSelect(event)}
+                />
+                {e.nombre}
+              </label>
+            ))}
+          </div>
+          {errors.types && (
+            <div className={styles.errorContainer}>
+              <p>{errors.types}</p>
+            </div>
+          )}
 
-        <div className={styles.inputbox}>
-          <label htmlFor="defensa"></label>
-          <input
-            type="number"
-            name='defensa'
-            placeholder='Defensa'
-            onChange={handleChange}
-            value={newPokemon.defensa}
-          />
-        </div>
-        <div className={styles.inputbox}>
-          <label htmlFor="velocidad"></label>
-          <input
-            type="number"
-            name='velocidad'
-            placeholder='Velocidad'
-            onChange={handleChange}
-            value={newPokemon.velocidad}
+          <button type="submit" className={styles.btn}>CREAR</button>
+        </form>
+      </div>
 
-          />
-        </div>
-        <div className={styles.teamsSelect}>
-          <h3>Tipo</h3>
-          {types.map((e, index) => (
-            <label key={index}>
-              <input
-                type="checkbox"
-                name="types"
-                value={e.id}
-                onChange={(event) => handleSelect(event)}
-              />
-              {e.nombre}
-            </label>
-          ))}
-        </div>
-
-        <button type="submit" className={styles.btn}>CREAR</button>
-      </form>
     </div>
   )
 }

@@ -21,7 +21,17 @@ const Create = () => {
     velocidad: 0
   }
   const [newPokemon, setNewPokemon] = useState({ ...initialPokemon });
-  const [errors, setErrors] = useState({})
+  const initialerrors = {
+    nombre: "Nombre de tu pokemon",
+    types: null,
+    imagen: "foto de tu pokemon",
+    vida: "indica la vida de tu pokemon",
+    ataque: "indica el ataque de tu pokemon",
+    defensa: "indica la defensa de tu pokemon",
+    velocidad: "indica la velocidad de tu pokemon"
+  }
+  
+  const [errors, setErrors] = useState({...initialerrors})
 
   function handleChange(e) {
     setNewPokemon({
@@ -52,14 +62,14 @@ const Create = () => {
           types: [...newPokemon.types, value],
         });
       }
-    } else{
+    } else {
       setNewPokemon({
         ...newPokemon,
         types: newPokemon.types.filter((item) => item !== value),
       });
     }
-    
-    
+
+
     // setNewPokemon({
     //   ...newPokemon,
     //   types: [...newPokemon.types, event.target.value]
@@ -195,8 +205,16 @@ const Create = () => {
               <p>{errors.types}</p>
             </div>
           )}
+          {Object.values(errors).every((error) => error == null) && (
+            <button type="submit" className={styles.btn}>
+              CREAR
+            </button>
+          )}
 
-          <button type="submit" className={styles.btn}>CREAR</button>
+
+
+
+
         </form>
       </div>
 

@@ -2,7 +2,6 @@ const validate = (input) => {
     let errors = {};
     let regexImage = /^(http|https):\/\/[^\s]+\.png$/
     
-
     if (!input.nombre) {
         errors.nombre = "Campo obligatorio";
     };
@@ -19,9 +18,9 @@ const validate = (input) => {
         errors.imagen = "Campo obligatorio";
     };
 
-    if (!regexImage.test(input.imagen)) {
-        errors.image = "Ingrese una URL de imagen PNG válida";
-    }
+    // if (!regexImage.test(input.imagen)) {
+    //     errors.imagen = "Ingrese una URL de imagen PNG válida";
+    // }
 
     if (input.vida <= 0) {
         errors.vida = "vida deber ser mayor a 0";
@@ -72,7 +71,7 @@ const validate = (input) => {
     };
 
     // Validación de los tipos
-    if (input.types.length > 1) {        
+    if (input.types.length > 2) {        
         errors.types ="Solo vas a poder seleccionar 2 tipos";
     };
 
